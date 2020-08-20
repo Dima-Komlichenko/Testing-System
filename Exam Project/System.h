@@ -13,33 +13,32 @@ using namespace std;
 
 class System
 {
-	list<Tester> tester;
+	list<Tester> testers;
 	Admin admin;
 	Categories categories;
 
 public:
 	void menu();
-	void methodTester(Tester& t);	// логин дожлен быть уникальным, если нет - вход
-	void methodAdmin();		// всего может существовать один
+	void methodTester(Tester& t);
+	void methodAdmin();
 
-	//for Admin
+	
 	void addTester();
 	void delTester();
-	void redactTester(); //редактировать тестировщика
-	void SignInAdmin();
-	void checkTestCategory();  // Need Test						//просмотр результатов по категориям
-	void checkTestTester();	   // Need Test
+	void redactTester();
+	void SignInAdmin();					
+	void checkTestTester();
 	void addPredmet();
 	void addTheme();
 	void addTest();
+
 	
-	//for Tester
 	void DoTest(Tester& t);
 	void SignInTester(string log);
 	void LogInTester();
 	void RegistrationTester(string log);
 
-	// for System
+	
 	void importTestsInFile();
 	void exportTestInProgram();
 	void importUsers();
@@ -49,27 +48,30 @@ public:
 
 void System::menu()
 {
-	system("cls");
-	cout << "Кто входит в систему?\n"
-		<< "1 - Админ\n"
-		<< "2 - Тестируемый\n"
-		<< "3 - Выход\n";
-	int who;
-	cin >> who;
-	while (who < 1 || who > 3) cin >> who;
-	switch (who)
+	while (true)
 	{
-	case 1:
-		SignInAdmin();
+		system("cls");
+		cout << "Кто входит в систему?\n"
+			<< "1 - Админ\n"
+			<< "2 - Тестируемый\n"
+			<< "3 - Выход\n";
+		int who;
+		cin >> who;
+		while (who < 1 || who > 3) cin >> who;
+		switch (who)
+		{
+		case 1:
+			SignInAdmin();
 
-		break;
-	case 2:
-		LogInTester();
-		break;
-	case 3:
-		
-		return;
+			break;
+		case 2:
+			LogInTester();
+			break;
+		case 3:
+			return;
+		}
 	}
+	
 }
 
 void System::SignInAdmin()
@@ -84,7 +86,6 @@ void System::SignInAdmin()
 		cout << "Вы зарегистрировались\n";
 		system("pause");
 		system("cls");
-		//тут нужно выгрузить все данные в файл(пароль - зашифровать)
 	}
 	else
 	{
@@ -99,13 +100,13 @@ void System::SignInAdmin()
 			cin >> pass;
 			if (log != admin.getLogin() || pass != admin.getPassword())
 			{
-				cout << "Вы ввели неверный логин или пароль";
+				cout << "Вы ввели неверный логин или пароль\n";
 			}
 			else
 				a = true;
 
 		} while (a == 0);
-		//тут мы зашли в админа
+		
 	}
 	methodAdmin();
 }
@@ -114,38 +115,36 @@ void System::methodAdmin()
 {
 	system("cls");
 	cout << "Что вы хотите сделать?\n"
-		<< "Изменить логин - 1\n"
-		<< "Изменить пароль - 2\n"
-		<< "Создать пользователя - 3\n"
-		<< "Удалить пользователя - 4\n"
-		<< "Модифицировать пользователя - 5\n"
-		<< "Посмотреть результаты тестирования по категориям - 6\n"
-		<< "Посмотреть резльтаты тестирования  пользователя - 7\n"
-		<< "Добавить предмет - 8\n"
-		<< "Добавить тему - 9\n"
-		<< "Добавить тест - 10\n"//тут еще будет добавление правильных и неправильных ответов
-		<< "Выйти - 11\n";
+		<< "1 - Изменить логин\n"
+		<< "2 - Изменить пароль\n"
+		<< "3 - Создать пользователя \n"
+		<< "4 - Удалить пользователя\n"
+		<< "5 - Модифицировать пользователя\n"
+		<< "6 - Посмотреть резльтаты тестирования  пользователя\n"
+		<< "7 - Добавить предмет\n"
+		<< "8 - Добавить тему\n"
+		<< "9 - Добавить тест\n"
+		<< "10 - Выйти\n";
 	int num;
 	cin >> num;
-	while (num < 1 || num > 13)	cin >> num;
+	while (num < 1 || num > 10)	cin >> num;
 	switch (num)
 	{
-	case 1:		admin.setLogin();		break; //
-	case 2:		admin.setPassword();	break; //
-	case 3:		addTester();			break; //
-	case 4:		delTester();			break; //
-	case 5:		redactTester();			break; //
-	case 6:		checkTestCategory();	break; // Need Test
-	case 7:		checkTestTester();		break; // Need Test
-	case 8:		addPredmet();			break;
-	case 9:		addTheme();				break;
-	case 10:	addTest();				break;
-	case 11:	system("cls");  menu();	break;
+	case 1:		admin.setLogin();		break;
+	case 2:		admin.setPassword(); 	break;
+	case 3:		addTester();			break;
+	case 4:		delTester();			break;
+	case 5:		redactTester();			break;
+	case 6:		checkTestTester();		break;
+	case 7:		addPredmet();			break;
+	case 8:		addTheme();				break;
+	case 9:		addTest();				break;
+	case 10:	return;
 	}
 
 	system("pause");
 	system("cls");
-	menu();
+	methodAdmin();
 
 }
 
@@ -154,13 +153,17 @@ void System::SignInTester(string log)
 	cout << "Введите пароль:\n";
 	string pas;
 	cin >> pas;
-	for (auto& x : tester)
+	bool in = false;
+	for (auto& x : testers)
 	{
 		if (x.getLogin() == log && x.getPassword() == pas)
 		{
 			methodTester(x);
+			in++;
 		}
-	}
+	}if (in == false)
+		cout << "Не удалось войти\n";
+	system("pause");
 }
 
 void System::RegistrationTester(string log)
@@ -178,16 +181,21 @@ void System::RegistrationTester(string log)
 	string phone;
 	cin >> phone;
 	Tester x(log, pas, name, address, phone);
-	tester.push_back(x);
-	auto it = tester.begin();
-	for (auto& x : tester)
+	testers.push_back(x);
+	auto it = testers.begin();
+	bool in = false;
+	for (auto& x : testers)
 	{
-		if (it == tester.end())
+		if (it == testers.end())
 		{
 			methodTester(x);
+			in++;
+			
 		}
-		it++;
 	}
+	if(in == false)
+		cout << "Не удалось войти\n";
+	system("pause");
 }
 
 void System::LogInTester()
@@ -202,7 +210,7 @@ void System::LogInTester()
 		string log;
 		cin >> log;
 		bool check = false;
-		for (auto x : tester)
+		for (auto x : testers)
 		{
 			if (x.getLogin() == log)
 			{
@@ -212,8 +220,8 @@ void System::LogInTester()
 		if (check == true)
 		{
 			cout << "Такой логин уже существует\n"
-				<< "Зарегистрироваться с другим логином - '1'\n"
-				<< "Войти с этим логином - '2'\n";
+				<< "1 - Зарегистрироваться с другим логином\n"
+				<< "2 - Войти с этим логином\n";
 			cin >> in;
 			if (in == 1)	continue;
 
@@ -242,16 +250,16 @@ void System::methodTester(Tester& t)
 {
 	system("cls");
 	cout << "Что вы хотите сделать?\n"
-		<< "Сдать новый тест - '1'\n"
-		<< "Посмотреть результаты предыдущих тестирования - '2'\n"
-		<< "Выйти - '3'\n";
+		<< "1 - Сдать новый тест\n"
+		<< "2 - Посмотреть результаты предыдущих тестирования\n"
+		<< "3 - Выйти\n";
 	int num;
 	cin >> num;
 	while (num < 1 || num > 3) cin >> num;
 	switch (num)
-	{	
+	{
 	case 1:		DoTest(t);			break;
-	case 2:		t.checkStat();		break;
+	case 2:		t.printMark();		break;
 	case 3:		menu();				break;
 	}
 
@@ -277,7 +285,7 @@ void  System::addTester()
 	string phone;
 	cin >> phone;
 	Tester _new(log, pas, name, home, phone);
-	tester.push_back(_new);
+	testers.push_back(_new);
 }
 
 void System::delTester()
@@ -286,13 +294,13 @@ void System::delTester()
 	string log;
 	cin >> log;
 	list<Tester>::iterator it;
-	it = tester.begin();
+	it = testers.begin();
 
-	for (auto& x : tester)
+	for (auto& x : testers)
 	{
 		if (x.getLogin() == log)
 		{
-			tester.erase(it);
+			testers.erase(it);
 			break;
 		}
 		it++;
@@ -301,127 +309,76 @@ void System::delTester()
 
 void System::redactTester()
 {
-	cout << "Введите логин тестировщика которого хотите редактировать:\n";
-	string log;
-	cin >> log;
-
-	list<Tester>::iterator it;
-	it = tester.begin();
-
-	for (auto& x : tester)
+	cout << "Введите имя тестировщика которого хотите редактировать:\n";
+	int name;
+	int i = 1;
+	for (auto& x : testers)
 	{
-		if (x.getLogin() == log)
-			//////////////////////////////////
-		{
-			int num = 0;
-			while (num != 6)
-			{
-				cout << "Что вы хотите редактировать\n"
-					<< "Логин - '1'\n"
-					<< "Пароль - '2'\n"
-					<< "Имя - '3'\n"
-					<< "Домашний адрес - '4'\n"
-					<< "Номер телефона - '5'\n"
-					<< "Ничего - '6'\n";
-				cin >> num;
-				while (num < 1 || num > 6) 	cin >> num;
-				switch (num)
-				{
-				case 1:
-					x.setLogin();
-					break;
-				case 2:
-					x.setPassword();
-					break;
-				case 3:
-					x.setName();
-					break;
-				case 4:
-					x.setHome_Address();
-					break;
-				case 5:
-					x.setPhone();
-					break;
-				case 6:
-					break;
-				}
-			}
-			break;
-		}
-		////////////////////////////////////
-		it++;
+		cout << i << " - " << x.getName() << "\n";
 	}
+	cin >> name;
+	i = 1;
+	for (auto& x : testers)
+	{
+		if (i == name)
+		{
+			cout << "Что вы хотите редактировать\n"
+				<< "1 - Логин\n"
+				<< "2 - Пароль\n"
+				<< "3 - Имя\n"
+				<< "4 - Домашний адрес\n"
+				<< "5 - Номер телефона\n"
+				<< "6 - Назад\n";
+			int num = 0;
+			cin >> num;
+			while (num < 1 || num > 6) 	cin >> num;
+			switch (num)
+			{
+			case 1:
+				x.setLogin();
+				break;
+			case 2:
+				x.setPassword();
+				break;
+			case 3:
+				x.setName();
+				break;
+			case 4:
+				x.setHome_Address();
+				break;
+			case 5:
+				x.setPhone();
+				break;
+			case 6:
+				break;
+			}
+
+		}
+	}
+
 	system("pause");
 	system("cls");
 	menu();
 }
 
-void System::checkTestCategory()
-{
-	cout << "Какую категорифю тестов вы хотите посмотреть?\n"
-		<< "Математика - '1'\n"
-		<< "Физика - '2'\n";
-	int num;
-	cin >> num;
-	int i = 0; // номер оценки
-	while (num < 1 || num > 2) cin >> num;
-	switch (num)
-	{
-	case 1:
-
-		// оценки всех студеньтов по  разделу математики
-		for (auto& x : tester)
-		{
-			cout << x.getName() << endl;
-			//		for (auto& c : maths)
-			{
-				//			cout << c.getQuestion() << setw(5) << x.getMarkMaths(i);
-				i++;
-			}
-		}
-		break;
-	case 2:
-		// оценки всех студеньтов по данному разделу
-		for (auto& x : tester)
-		{
-			cout << x.getName() << endl;
-			//			for (auto& c : physics)
-			{
-				//				cout << c.getQuestion() << setw(5) << x.getMarkPhysics(i);
-				i++;
-			}
-		}
-		break;
-	}
-	system("pause");
-	system("cls");
-	methodAdmin();
-}
-
 void System::checkTestTester()
 {
-	cout << "Введите логин тестировщика которого хотите посмотреть статистику: ";
-	string log;
-	cin >> log;
-	int i = 0;
-	for (auto& x : tester)
+	cout << "Выберите имя пользователя, которого хотите посмотреть результаты тестирований:\n";
+	int name;
+	int i = 1;
+	for (auto& x : testers)
 	{
-		if (x.getLogin() == log)
-		{
-			cout << "Математика:\n";
-			//			for (auto& c : maths)
-			{
-				//				cout << c.getQuestion() << setw(5) << x.getMarkMaths(i);
-				i++;
-			}
-			cout << "Физика:\n";
-			//			for (auto& c : physics)
-			{
-				//				cout << c.getQuestion() << setw(5) << x.getMarkPhysics(i);
-				i++;
-			}
-		}
+		cout << i << " - " << x.getName() << "\n";
+		i++;
 	}
+	cin >> name;
+	i = 1;
+	for (auto& x : testers)
+	{
+		if(i == name)
+			x.printMark();
+	}
+
 	system("pause");
 	system("cls");
 	methodAdmin();
@@ -439,19 +396,25 @@ void System::addPredmet()
 void System::addTheme()
 {
 	cout << "Введите название предмета к которому хотите добавить тему:\n";
-	string predmetName;
-	cin >> predmetName;
-
+	int predmetName;
 	list<Predmet> predmets = categories.getPredmets();
+	int i = 1;
 	for (auto& x : predmets)
 	{
-		if (predmetName == x.getName())
+		cout << i << " - " << x.getName() << "\n";
+		i++;
+	}
+	cin >> predmetName;
+	i = 1;
+	for (auto& x : predmets)
+	{
+		if (predmetName == i)
 		{
 			cout << "Введите названте темы которую хотите ввести:\n";
 			string themeName;
 			cin >> themeName;
 			Theme _new(themeName);
-			categories.addTheme(predmetName, &_new);
+			categories.addTheme(x.getName(), &_new);
 		}
 	}
 }
@@ -459,30 +422,48 @@ void System::addTheme()
 void System::addTest()
 {
 	cout << "Введите название предмета к которому хотите добавить тест:\n";
-	string predmetName;
-	cin >> predmetName;
-
-	cout << "Введите название темы к которой хотите добавить тест:\n";
-	string themeName;
-	cin >> themeName;
-
+	int predmetName;
 	list<Predmet> predmets = categories.getPredmets();
+	int i = 1;
 	for (auto& x : predmets)
 	{
-		if (predmetName == x.getName())
+		cout << i << " - " << x.getName() << "\n";
+		i++;
+	}
+	cin >> predmetName;
+
+
+	cout << "Введите название темы к которой хотите добавить тест:\n";
+	int themeName;
+	i = 1;
+	for (auto& x : predmets)
+	{
+		if (predmetName == i)
 		{
 			list<Theme> thems = x.getThemes();
+			i = 1;
 			for (auto& c : thems)
 			{
-				if (themeName == c.getName())
+				cout << i << " - " << c.getName();
+				i++;
+			}
+		}
+	}
+	cin >> themeName;
+	for (auto& x : predmets)
+	{
+		if (predmetName == i)
+		{
+			list<Theme> thems = x.getThemes();
+			i = 1;
+			for (auto& c : thems)
+			{
+				if (themeName == i)
 				{
 					Test newTest;
-					//c.addTest(&newTest);
-					categories.addTest(predmetName, themeName, &newTest);
-
+					categories.addTest(x.getName(), c.getName(), &newTest);
 				}
 			}
-
 		}
 	}
 }
@@ -508,9 +489,9 @@ void System::DoTest(Tester& t)
 	list<Predmet> predmets = categories.getPredmets();
 	cout << "По какому предмету вы хотите сдать тест?\n";
 	int i = 1;
-	for (auto x : predmets)
+	for (auto& x : predmets)
 	{
-		cout << x.getName() << " -'" << i << "'\n";
+		cout << i << " - " << x.getName() << "\n";
 		i++;
 	}
 	int num;
@@ -526,7 +507,7 @@ void System::DoTest(Tester& t)
 			list<Theme> themes = x.getThemes();
 			for (auto& c : themes)
 			{
-				cout << c.getName() << "-'" << i << "'\n";
+				cout << i << " - " << c.getName() << "\n";
 				i++;
 			}
 			cin >> num;
@@ -558,11 +539,11 @@ void System::DoTest(Tester& t)
 	methodTester(t);
 }
 
-void System::importUsers() // in File
+void System::importUsers()
 {
 	ofstream ofs("Users.txt");
 	ofs << admin;
-	for (auto& x : tester)
+	for (auto& x : testers)
 		ofs << x;
 	ofs.close();
 }
@@ -570,13 +551,13 @@ void System::importUsers() // in File
 void System::exportUsers()
 {
 	ifstream in("Users.txt");
-	if (in >> admin)	{}
+	if (in >> admin) {}
 	Tester temp;
 	string x;
 	while (!in.eof())
 	{
 		in >> temp;
-		tester.push_back(temp);
+		testers.push_back(temp);
 	}
 
 }

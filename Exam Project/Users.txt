@@ -1,5 +1,5 @@
 dgplq
-sdvvzrug
+dgplq
 admin3000
 
 4
@@ -13,7 +13,7 @@ MARKSEND
 2
 2
 2
-maths-discretMath
+Дискретная-математика
 1
 MARKSEND
 6
@@ -21,6 +21,6 @@ MARKSEND
 3
 3
 3
-maths-discretMath
+Дискретная-математика
 1
 MARKSEND

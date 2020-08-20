@@ -20,13 +20,6 @@ public:
 	Tester() {}
 	Tester(string l, string pas, string n, string h, string p) :login(l), password(pas), name(n), home_address(h), phone(p) {}
 
-	void checkStat() //посмотреть статистику
-	{
-		for (auto& x : mark)
-		{
-			cout << x.first << " " << x.second << "\n";
-		}
-	}
 
 
 	void addMark(pair<string, int> p)
@@ -64,9 +57,18 @@ public:
 	{
 		return phone;
 	}
+
 	map<string, int> getMark()
 	{
 		return mark;
+	}
+
+	void printMark()
+	{
+		for (auto& x : mark)
+		{
+			cout << x.first << " " << x.second << "\n\n";
+		}
 	}
 
 
@@ -178,10 +180,3 @@ ifstream& operator>> (ifstream& in, Tester& a)
 	}
 	return in;
 }
-
-//string login;
-//string password;
-//string name;
-//string home_address;
-//string phone;
-//map<string, int> mark;

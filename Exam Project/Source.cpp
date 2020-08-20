@@ -18,3 +18,5 @@ int main()
 	system("pause");
 }
 
+//dgplq - "admin"
+//whvwhu4 = "tester1"

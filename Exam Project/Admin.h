@@ -17,20 +17,6 @@ public:
 	Admin():login("-") {}
 	Admin(string l, string p, string n) :login(l), password(p), name(n) {}
 
-	void checkTest();
-	void addCategory(); //добавить категорию
-	void addTest(); // добавить тест(в отдельную категорию)
-	void addQuestion(); //добавить вопрос (в тест) внутри нужно реализовать задание правильных и не правильных ответов
-	
-	void exportTestwithFile();
-	void redactTest(); // редактировать тест
-	
-	
-	void checkTestTester(); //просмотр по конкретному пользователю
-	void redactLogin(); //изменить логин
-	void redactPassword();
-
-	////////////////////////////////////
 	void setLogin()
 	{
 		cout << "Введите новый логин: ";
